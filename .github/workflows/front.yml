@@ -3,9 +3,9 @@ name: Deploy scraper front to gke
 on:
   push:
     branches:
-    - main
+    - pipeline-mods
     paths:
-    - front/**
+    - .github/workflows/**
 
 env:
   PROJECT_ID: foodsafe-369116
