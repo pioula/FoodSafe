@@ -1,17 +1,12 @@
 import React from 'react';
+import SignIn from './components/SignIn/SignIn';
 import useSignIn from './components/SignIn/useSignIn';
 
 function Home() {
-    const {user, onSignIn} = useSignIn();
-
     return (
-        <div>
-            {
-                user ?
-                    <p style={{ marginBottom: 0 }}>Welcome { user }!</p> :
-                    <p style={{ marginBottom: 0 }} onClick={ onSignIn }>Sign In</p>
-            }
-        </div>
+        <>
+            <SignIn />
+        </>
     );
 }
 
