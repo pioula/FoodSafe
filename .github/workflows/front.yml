@@ -42,7 +42,7 @@ jobs:
     - id: get-gke-credentials
       uses: google-github-actions/get-gke-credentials@v0
       with:
-        cluster_name: cluster-1
+        cluster_name: food-safe-cluster
         location: us-central1-c
 
     # Build the Docker image
@@ -64,4 +64,3 @@ jobs:
         (cd front && kustomize edit set image $DEPLOYMENT_NAME=$NEW_IMAGE)
         kubectl apply -k ./front/
         kubectl get services -o wide
-        
