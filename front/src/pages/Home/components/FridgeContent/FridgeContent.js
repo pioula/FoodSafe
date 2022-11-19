@@ -9,6 +9,7 @@ function FridgeContent() {
   const userContext = useContext(UserContext);
 
   function prepareIngredientName(ingredient) {
+    ingredient = ingredient.charAt(0).toUpperCase() + ingredient.slice(1);
     if (ingredient.length > 10) {
       return ingredient.substr(0, 10) + "...";
     } else {
@@ -36,7 +37,7 @@ function FridgeContent() {
                   </Col>
                   <Col>
                     <p className="ingredient-name">
-                      {prepareIngredientName(value.charAt(0).toUpperCase() + value.slice(1))}
+                      {prepareIngredientName(value)}
                     </p>
                   </Col>
                 </Row>
