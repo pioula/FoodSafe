@@ -1,24 +1,56 @@
 import React, { useContext, useEffect } from 'react';
+import Col from 'react-bootstrap/esm/Col';
+import Container from 'react-bootstrap/esm/Container';
+import Row from 'react-bootstrap/esm/Row';
 import UserContext from '../../../../contexts/userContext';
+import './styles.css';
 
 function FridgeContent() {
   const userContext = useContext(UserContext);
 
+  function prepareIngredientName(ingredient) {
+    if (ingredient.length > 10) {
+      return ingredient.substr(0, 10) + "...";
+    } else {
+      return ingredient;
+    }
+  }
+
   useEffect(() => {
     if (!userContext.usersFridge) {
-      userContext.setFridge(['tomato', 'pasta', 'cheese']);
+      userContext.setFridge(['tomatooooooooooooooooooooooooooooooooooooooooooooooooooooo', 'pasta', 'cheese']);
     }
   }, []); 
 
   return (<>
     { userContext.usersFridge ?
-      <table>
-        <tbody>
-          {
-            userContext.usersFridge.map((value) => <tr key={value}><td>{value}</td></tr>)
+      <div class="contents">
+        <div class="centerizer">
+        {
+            userContext.usersFridge.map((value) => 
+            <div key={value} className="table-row">
+              <Container>
+                <Row>
+                  <Col>
+                    <div>IMG</div>
+                  </Col>
+                  <Col>
+                    <p className="ingredient-name">
+                      {prepareIngredientName(value.charAt(0).toUpperCase() + value.slice(1))}
+                    </p>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
+          )
           }
-        </tbody>
-      </table> : <div>Loading...</div>
+        <div className="add-row">
+           <p className="add-button">
+              Add new +
+            </p>
+          </div>
+        </div>
+      </div> : <div>Loading...</div>
     }
   </>);
 }

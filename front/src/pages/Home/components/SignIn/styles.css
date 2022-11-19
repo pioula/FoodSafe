@@ -1,0 +1,15 @@
+.greeting {
+  display: inline-block;
+  margin-bottom: 150px;
+}
+
+.welcome {
+  font-size: 70px;
+  margin-bottom: 0;
+}
+
+.catchphrase {
+  font-size: 30px;
+  margin-bottom: 0;
+  color: #252525a9;
+}
