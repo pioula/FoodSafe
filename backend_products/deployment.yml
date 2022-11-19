@@ -1,0 +1,20 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "fridge-backend"
+  namespace: "fridge"
+  labels:
+    app: "fridge-backend"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "fridge-backend"
+  template:
+    metadata:
+      labels:
+        app: "fridge-backend"
+    spec:
+      containers:
+      - name: "fridge-backend-sha256-1"
+        image: "fridge-backend"
