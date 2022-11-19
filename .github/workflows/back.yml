@@ -62,5 +62,5 @@ jobs:
     - name: Deploy
       run: |-
         (cd backend_products && kustomize edit set image $DEPLOYMENT_NAME=$NEW_IMAGE)
-        kubectl apply -k .//
+        kubectl apply -k ./backend_products/
         kubectl get services -o wide
