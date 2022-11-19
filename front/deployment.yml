@@ -1,0 +1,20 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "fridge-front"
+  namespace: "fridge"
+  labels:
+    app: "fridge-front"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "fridge-front"
+  template:
+    metadata:
+      labels:
+        app: "fridge-front"
+    spec:
+      containers:
+      - name: "fridge-front-sha256-1"
+        image: "fridge-front"

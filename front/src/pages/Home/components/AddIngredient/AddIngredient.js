@@ -6,12 +6,10 @@ function AddIngredient() {
   const [ingredient, setIngredient] = useState('');
 
   function handleChange(event) {
-    console.log("hi");
     setIngredient(event.target.value);
   }
 
   function handleClick() {
-    console.log(ingredient);
     userContext.setFridge([...userContext.usersFridge, ingredient])
   }
 
