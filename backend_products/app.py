@@ -19,6 +19,10 @@ def delete_products(user):
   product_router.remove(user, request.json['products'])
   return {}, 200
 
+@app.route("/recipe/<user>", methods=['GET'])
+def recipe(user):
+  return product_router.search(user)
+
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
