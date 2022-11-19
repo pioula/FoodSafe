@@ -3,9 +3,9 @@ name: Deploy fridge backend to gke
 on:
   push:
     branches:
-    - python-pipeline
+    - main
     paths:
-    - .github/workflows/**
+    - backend_products/**
 
 env:
   PROJECT_ID: foodsafe-369116
