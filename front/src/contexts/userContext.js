@@ -31,7 +31,9 @@ function signInUser() {
 export let userContextContent = {
     auth,
     provider,
-    signInUser
+    signInUser,
+    usersFridge: null,
+    setFridge: () => {}
 }
 
 const UserContext = React.createContext(userContextContent);
