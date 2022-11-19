@@ -3,9 +3,9 @@ name: Deploy scraper front to gke
 on:
   push:
     branches:
-    - pipeline-mods
+    - main
     paths:
-    - .github/workflows/**
+    - front/**
 
 env:
   PROJECT_ID: foodsafe-369116
@@ -64,4 +64,3 @@ jobs:
         (cd front && kustomize edit set image $DEPLOYMENT_NAME=$NEW_IMAGE)
         kubectl apply -k ./front/
         kubectl get services -o wide
-
