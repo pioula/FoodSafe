@@ -9,7 +9,7 @@ function useSignIn() {
         userContext.signInUser()
             .then((res) => {
                 if (res != null) {
-                    setUser(res.displayName);
+                    setUser({name: res.displayName, uid: res.uid});
                 }
                 else {
                     return [];

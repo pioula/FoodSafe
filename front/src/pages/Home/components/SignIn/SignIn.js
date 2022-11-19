@@ -7,7 +7,7 @@ function SignIn() {
         <div>
             {
                 user ?
-                    <p style={{ marginBottom: 0 }}>Welcome { user }!</p> :
+                    <p style={{ marginBottom: 0 }}>Welcome { user.name }!</p> :
                     <p style={{ marginBottom: 0 }} onClick={ onSignIn }>Sign In</p>
             }
         </div>

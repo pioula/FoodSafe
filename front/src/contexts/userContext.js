@@ -21,7 +21,10 @@ const auth = getAuth();
 
 function signInUser() {
     return signInWithPopup(auth, provider)
-        .then((result) => result.user)
+        .then((result) => {
+            console.log(result.user.uid);
+            return result.user;
+        })
         .catch((error) => {
             console.log(error);
             return null
