@@ -1,17 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import UserContext from '../../../../contexts/userContext';
 
 function FridgeContent() {
   const userContext = useContext(UserContext);
-  const [a, setA] = useState(null);
+
   useEffect(() => {
-    console.log(userContext.usersFridge);
     if (!userContext.usersFridge) {
-      console.log("Hi!");
       userContext.setFridge(['tomato', 'pasta', 'cheese']);
     }
-    setA(['xd']);
-    console.log(userContext.usersFridge);
   }, []); 
 
   return (<>
