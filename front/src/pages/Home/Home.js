@@ -6,7 +6,6 @@ function Home() {
 
     return (
         <div>
-            Hellow
             {
                 user ?
                     <p style={{ marginBottom: 0 }}>Welcome { user }!</p> :
