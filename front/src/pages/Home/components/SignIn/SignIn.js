@@ -1,9 +1,10 @@
 import useSignIn from "./useSignIn";
 import './styles.css';
+import { useEffect } from "react";
 
 function SignIn() {
     const { user, onSignIn } = useSignIn();
-
+    
     return (
         <div className="greeting">
             {

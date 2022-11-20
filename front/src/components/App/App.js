@@ -4,8 +4,10 @@ import Home from '../../pages/Home/Home';
 
 function App() {
   const [usersFridge, setFridge] = useState();
+  const [user, setUser] = useState(null);
+
   return (
-    <UserContext.Provider value={{ ...userContextContent, usersFridge, setFridge }}>
+    <UserContext.Provider value={{ ...userContextContent, usersFridge, setFridge, user, setUser }}>
         <Home />
     </UserContext.Provider>
   );
