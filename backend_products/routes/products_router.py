@@ -62,21 +62,26 @@ class ProductRouter():
 
   def add(self, user, new_products):
     ref, products = self.get_user(user)
+    new_products = [e.lower() for e in new_products]
     products = list(set(products) | set(new_products))
     ref.set(products)
     return {}
 
   def remove(self, user, removed_products):
     ref, products = self.get_user(user)
+    removed_products = [e.lower() for e in removed_products]
     products = list(set(products) - set(removed_products))
     ref.set(products)
     return {}
 
   def search(self, user):
     ref, products = self.get_user(user)
-    xd = get_recipes_by_products(products)
+    if len(products) == 0:
+      products = ['tomato', 'pasta']
+    recipes = get_recipes_by_products(products)
+
     results = []
-    for meal in xd:
+    for meal in recipes:
       id = meal['id']
       result = get_data_from_recipe(id)
       result['missed_ingredients'] = [ing['name'] for ing in meal['missedIngredients']]
