@@ -17,6 +17,7 @@ def response_wrapper(data, code=200):
   response.headers.add("Access-Control-Allow-Origin", "*")
   response.headers.add("Access-Control-Allow-Headers", "*")
   response.headers.add("Access-Control-Allow-Methods", "*")
+  response.headers.add("Access-Control-Allow-Credentials","true")
   return response
 
 @app.route("/products/<user>", methods=['GET'])

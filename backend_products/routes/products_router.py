@@ -53,7 +53,6 @@ class ProductRouter():
     ref = self.get_ref_for(user)
     products = ref.get()
     if products is None:
-      print('DUPA')
       products = []
     return ref, products
 
