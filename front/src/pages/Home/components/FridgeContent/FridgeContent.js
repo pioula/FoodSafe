@@ -21,12 +21,12 @@ function FridgeContent() {
     }
   }
 
-  useAsync(() => get(userContext.user.uid), (result) => userContext.setFridge([]), [], (error) => console.log(error));
+  useAsync(() => get(userContext.user.uid), (result) => userContext.setFridge(result.products), [], (error) => console.log(error));
 
   return (<>
     { userContext.usersFridge || userContext.usersFridge === [] ?
-      <div class="contents">
-        <div class="centerizer">
+      <div className="contents">
+        <div className="centerizer">
         {
             userContext.usersFridge.map((value) => 
             <div key={value} className="table-row">

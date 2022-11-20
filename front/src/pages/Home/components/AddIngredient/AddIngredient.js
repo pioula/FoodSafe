@@ -3,11 +3,13 @@ import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/esm/Row';
 import UserContext from '../../../../contexts/userContext';
+import useServer from '../../../../hooks/useServer';
 import './styles.css';
 
 function AddIngredient() {
   const [ingredient, setIngredient] = useState('');
-  const [mode, setMode] = useState(true); // true - add button
+  const userContext = useContext(UserContext);
+  const {post} = useServer('/products');
 
   const addInput = useRef(null);
 
@@ -15,11 +17,10 @@ function AddIngredient() {
     setIngredient(event.target.value);
   }
 
-  // function handleClick() {
-  //   userContext.setFridge([...userContext.usersFridge, ingredient])
-  // }
-  function handleClick() {
-
+  
+  async function handleClick() {
+    userContext.setFridge([...userContext.usersFridge, ingredient])
+    await post({products: [...userContext.usersFridge, ingredient]}, userContext.user.uid);
   }
 
   return (
@@ -27,7 +28,7 @@ function AddIngredient() {
       <Container>
         <Row>
           <Col>
-            <input type="text" name="Ingredient" onChange={handleChange} ref={addInput} />
+            <input type="text" name="Ingredient" onChange={handleChange} ref={addInput} placeholder={"Type a new ingredient"}/>
           </Col>
           <Col md="auto">
             <div className="accept-button" onClick={handleClick}>
