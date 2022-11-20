@@ -9,6 +9,17 @@ function POST(object) {
   };
 }
 
+function DELETE(object) {
+  return {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(object),
+  };
+}
+
 const GET = {
   method: 'GET',
   headers: {
@@ -36,7 +47,12 @@ function useServer(path) {
       .then((response) => ({ status: response.status, data: response.json() }));
   }
 
-  return { get, post };
+  function remove(object, uid) {
+    return fetch(`${defaultPath}${path}/${uid}`, { ...DELETE(object) })
+      .then((response) => ({ status: response.status, data: response.json() }));
+  }
+
+  return { get, post, remove };
 }
 
 export default useServer;

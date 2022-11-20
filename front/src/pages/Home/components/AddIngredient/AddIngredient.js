@@ -11,8 +11,6 @@ function AddIngredient() {
   const userContext = useContext(UserContext);
   const {post} = useServer('/products');
 
-  const addInput = useRef(null);
-
   function handleChange(event) {
     setIngredient(event.target.value);
   }
@@ -21,6 +19,7 @@ function AddIngredient() {
   async function handleClick() {
     userContext.setFridge([...userContext.usersFridge, ingredient])
     await post({products: [...userContext.usersFridge, ingredient]}, userContext.user.uid);
+    setIngredient('');
   }
 
   return (
@@ -28,7 +27,7 @@ function AddIngredient() {
       <Container>
         <Row>
           <Col>
-            <input type="text" name="Ingredient" onChange={handleChange} ref={addInput} placeholder={"Type a new ingredient"}/>
+            <input type="text" name="Ingredient" onChange={handleChange} placeholder={"Type a new ingredient"} value={ingredient}/>
           </Col>
           <Col md="auto">
             <div className="accept-button" onClick={handleClick}>

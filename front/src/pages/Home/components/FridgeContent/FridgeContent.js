@@ -6,6 +6,7 @@ import UserContext from '../../../../contexts/userContext';
 import useAsync from '../../../../hooks/useAsync';
 import useServer from '../../../../hooks/useServer';
 import AddIngredient from '../AddIngredient/AddIngredient';
+import DeleteIngredient from '../DeleteIngredient/DeleteIngredient';
 import './styles.css';
 
 function FridgeContent() {
@@ -33,7 +34,7 @@ function FridgeContent() {
               <Container>
                 <Row>
                   <Col>
-                    <div>IMG</div>
+                    <DeleteIngredient ingredient={value} />
                   </Col>
                   <Col>
                     <p className="ingredient-name">
