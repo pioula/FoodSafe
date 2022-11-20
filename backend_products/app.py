@@ -9,10 +9,10 @@ CORS(app)
 
 # Lazily run code, and add headers even if it fails.
 def response_wrapper(data, code=200):
-  try:
-    response = make_response(data(), code)
-  except:
-    response = make_response({}, 500)
+  # try:
+  response = make_response(data(), code)
+  # except:
+  #   response = make_response({}, 500)
 
   response.headers.add("Access-Control-Allow-Origin", "*")
   response.headers.add("Access-Control-Allow-Headers", "*")
