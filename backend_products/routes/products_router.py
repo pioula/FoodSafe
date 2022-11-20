@@ -4,6 +4,39 @@ import json
 import firebase_admin as fa
 from firebase_admin import db
 
+def get_recipes_by_products(products):
+  results = requests.get(
+    'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
+    {
+      'ingredients': ','.join(products),
+      'ranking': '1',
+      'ignorePantry': 'true',
+      'number': '5'
+    },
+    headers={
+      'X-RapidAPI-Key': '5c1cef73cfmsh554db8e0a00da8fp1f020ajsn5700fe68f2bc',
+      'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+    }
+  )
+  return results.json()
+
+def get_data_from_recipe(id):
+  result = requests.get(
+    'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/{}/information'.format(id),
+    headers={
+      'X-RapidAPI-Key': '5c1cef73cfmsh554db8e0a00da8fp1f020ajsn5700fe68f2bc',
+      'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+    }
+  )
+  result = result.json()
+  return {
+    'ingredients': [ing['original'] for ing in result['extendedIngredients']],
+    'image': result['image'],
+    'summary': result['summary'],
+    'sourceUrl': result['sourceUrl'],
+    'title': result['title'],
+    'creditsText': result['creditsText']
+  }
 
 class ProductRouter():
   def __init__(self):
@@ -39,29 +72,13 @@ class ProductRouter():
 
   def search(self, user):
     ref, products = self.get_user(user)
-    xd = requests.get(
-      'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients',
-      {
-        'ingredients': ','.join(products),
-        'ranking': '1',
-        'ignorePantry': 'true',
-        'number': '5'
-      },
-      headers={
-        'X-RapidAPI-Key': '5c1cef73cfmsh554db8e0a00da8fp1f020ajsn5700fe68f2bc',
-        'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-      }
-    )
-    xd = dict(enumerate(xd.json()))
-    # print(xd)
-    # print(','.join(products))
-    return xd
+    xd = get_recipes_by_products(products)
+    results = []
+    for meal in xd:
+      id = meal['id']
+      result = get_data_from_recipe(id)
+      result['missed_ingredients'] = [ing['name'] for ing in meal['missedIngredients']]
+      results.append(result)
 
-# results -> 0 -> analyzedInstructions -> 0 -> steps -> 0..n -> step NIE
-# results -> 0 -> creditsText TAK
-# results -> 0 -> extendedIngredients -> 0..n -> original (to jest nazwa oraz ilość) TAK
-# results -> 0 -> missedIngredients -> 0..n -> name (to jest krótka nazwa) TAK
-# results -> 0 -> image TAK
-# results -> 0 -> sourceUrl TAK
-# results -> 0 -> summary TAK
-# 
+    return dict(enumerate(results))
+
