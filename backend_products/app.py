@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, make_response
 from flask_cors import CORS
 from routes.products_router import ProductRouter
 
@@ -9,7 +9,11 @@ CORS(app)
 
 @app.route("/products/<user>", methods=['GET'])
 def get_products(user):
-  return product_router.list(user)
+  response = make_response(product_router.list(user))
+  response.headers.add("Access-Control-Allow-Origin", "*")
+  response.headers.add("Access-Control-Allow-Headers", "*")
+  response.headers.add("Access-Control-Allow-Methods", "*")
+  return response
 
 @app.route("/products/<user>", methods=['POST'])
 def post_products(user):
