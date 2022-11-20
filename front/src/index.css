@@ -1,10 +1,15 @@
 body {
   background-image: url("/public/pizza_background_small.png");
   background-repeat: no-repeat;
-  background-position: right;
+  background-position: right top;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.loading {
+  font-size: 40px;
+  color: #1a1a1aa9;
 }

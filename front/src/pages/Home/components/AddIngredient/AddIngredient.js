@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/esm/Row';
@@ -15,7 +15,6 @@ function AddIngredient() {
     setIngredient(event.target.value);
   }
 
-  
   async function handleClick() {
     userContext.setFridge([...userContext.usersFridge, ingredient])
     await post({products: [...userContext.usersFridge, ingredient]}, userContext.user.uid);
@@ -27,7 +26,7 @@ function AddIngredient() {
       <Container>
         <Row>
           <Col>
-            <input type="text" name="Ingredient" onChange={handleChange} placeholder={"Type a new ingredient"} value={ingredient}/>
+            <input type="text" name="Ingredient" onChange={handleChange} placeholder={"Type a new content i.e. tomato"} value={ingredient}/>
           </Col>
           <Col md="auto">
             <div className="accept-button" onClick={handleClick}>

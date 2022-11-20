@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import AddIngredient from './components/AddIngredient/AddIngredient';
 import FridgeContent from './components/FridgeContent/FridgeContent';
 import SignIn from './components/SignIn/SignIn';
 
@@ -9,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 
 import './styles.css';
 import UserContext from '../../contexts/userContext';
+import Recipe from './components/Recipe/Recipe';
 
 function Home() {
     const userContext = useContext(UserContext);
@@ -20,6 +20,9 @@ function Home() {
                 <Container>
                     <Row>
                         <Col><SignIn /></Col>
+                    </Row>
+                    <Row>
+                        <Col><Recipe /></Col>
                     </Row>
                     <Row>
                         <Col><FridgeContent /></Col>
