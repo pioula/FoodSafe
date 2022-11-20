@@ -53,12 +53,13 @@ class ProductRouter():
     ref = self.get_ref_for(user)
     products = ref.get()
     if products is None:
+      print('DUPA')
       products = []
     return ref, products
 
   def list(self, user):
     _, products = self.get_user(user)
-    return dict(enumerate(products))
+    return dict({'products': products})
 
   def add(self, user, new_products):
     ref, products = self.get_user(user)
