@@ -1,13 +1,15 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
+from flask_cors import CORS
 from routes.products_router import ProductRouter
-
 
 product_router = ProductRouter()
 app = Flask(__name__)
+CORS(app)
+
 
 @app.route("/products/<user>", methods=['GET'])
 def get_products(user):
-  return jsonify(list(product_router.list(user)))
+  return product_router.list(user)
 
 @app.route("/products/<user>", methods=['POST'])
 def post_products(user):
@@ -28,7 +30,6 @@ def recipe(user):
 @app.route('/<path:path>')
 def catch_all(path):
     return {}, 404
-
 
 if __name__ == "__main__":
     app.run(debug=True)
