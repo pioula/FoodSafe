@@ -1,16 +1,18 @@
 .greeting {
   display: inline-block;
-  margin-bottom: 150px;
+  height: 100vh;
+  margin-bottom: 0;
 }
 
 .welcome {
-  font-size: 70px;
+  font-size: 80px;
   margin-bottom: 0;
+  margin-top: 30vh;
   color: #a7128ba9;
 }
 
 .catchphrase {
-  font-size: 30px;
+  font-size: 50px;
   margin-bottom: 0;
   color: #252525a9;
 }

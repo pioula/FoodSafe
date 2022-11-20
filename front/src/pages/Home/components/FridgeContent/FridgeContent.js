@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/esm/Row';
@@ -25,6 +25,9 @@ function FridgeContent() {
   useAsync(() => get(userContext.user.uid), (result) => userContext.setFridge(result.products), [], (error) => console.log(error));
 
   return (<>
+  <div className="fridge-title-container">
+    <p className="fridge-title">Fridge contents</p>
+  </div>
     { userContext.usersFridge || userContext.usersFridge === [] ?
       <div className="contents">
         <div className="centerizer">
@@ -48,7 +51,7 @@ function FridgeContent() {
           }
         <AddIngredient />
         </div>
-      </div> : <div>Loading...</div>
+      </div> : <div><p className="loading">Loading your fridge contents...</p></div>
     }
   </>);
 }

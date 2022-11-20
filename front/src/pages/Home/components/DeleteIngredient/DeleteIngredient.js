@@ -1,7 +1,8 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext } from 'react';
 import UserContext from '../../../../contexts/userContext';
 import useServer from '../../../../hooks/useServer';
 import './styles.css';
+import CloseButton from 'react-bootstrap/CloseButton';
 
 function DeleteIngredient(props) {
   const userContext = useContext(UserContext);
@@ -19,7 +20,7 @@ function DeleteIngredient(props) {
 
   return (
     <div onClick={handleClick}>
-      ✕
+      <CloseButton />
     </div>
   );
 }

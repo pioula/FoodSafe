@@ -1,0 +1,52 @@
+.recipe-image {
+  width: 400px;
+  left: 50%;
+  margin-left: -200px;
+  position: absolute;
+}
+
+.image-container {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 50%;
+}
+
+.recipe-title-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.recipe-title {
+  font-size: 50px;
+}
+
+.recipe {
+  width: 70%;
+  color: #1a1a1aa9;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.credits {
+  color: #a7128ba9;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.credits:hover {
+  text-decoration: underline;
+  color: #a7128ba9;
+}
+
+.credits:active {
+  color: #a7128ba9;
+}
+
+.credits:visited {
+  color: #a7128ba9;
+}
