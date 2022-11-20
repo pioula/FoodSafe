@@ -58,17 +58,19 @@ class ProductRouter():
 
   def list(self, user):
     _, products = self.get_user(user)
-    return products
+    return dict(enumerate(products))
 
   def add(self, user, new_products):
     ref, products = self.get_user(user)
     products = list(set(products) | set(new_products))
     ref.set(products)
+    return {}
 
   def remove(self, user, removed_products):
     ref, products = self.get_user(user)
     products = list(set(products) - set(removed_products))
     ref.set(products)
+    return {}
 
   def search(self, user):
     ref, products = self.get_user(user)
