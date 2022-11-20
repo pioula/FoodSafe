@@ -36,7 +36,9 @@ export let userContextContent = {
     provider,
     signInUser,
     usersFridge: null,
-    setFridge: () => {}
+    setFridge: () => {},
+    user: null,
+    setUser: () => {}
 }
 
 const UserContext = React.createContext(userContextContent);

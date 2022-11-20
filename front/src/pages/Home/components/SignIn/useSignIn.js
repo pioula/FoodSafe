@@ -2,14 +2,13 @@ import { useContext, useState } from "react";
 import UserContext from "../../../../contexts/userContext";
 
 function useSignIn() {
-    const [user, setUser] = useState(null);
     const userContext = useContext(UserContext);
 
     function onSignIn() {
         userContext.signInUser()
             .then((res) => {
                 if (res != null) {
-                    setUser({name: res.displayName, uid: res.uid});
+                    userContext.setUser({name: res.displayName, uid: res.uid});
                 }
                 else {
                     return [];
@@ -18,7 +17,7 @@ function useSignIn() {
             .catch((err) => console.log(err));
     }
 
-    return { user, onSignIn };
+    return { user: userContext.user , onSignIn };
 }
 
 export default useSignIn;

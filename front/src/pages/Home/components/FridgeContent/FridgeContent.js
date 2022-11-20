@@ -3,9 +3,12 @@ import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/esm/Row';
 import UserContext from '../../../../contexts/userContext';
+import useAsync from '../../../../hooks/useAsync';
+import useServer from '../../../../hooks/useServer';
 import './styles.css';
 
 function FridgeContent() {
+  const {get} = useServer('/products');
   const userContext = useContext(UserContext);
 
   function prepareIngredientName(ingredient) {
@@ -17,14 +20,10 @@ function FridgeContent() {
     }
   }
 
-  useEffect(() => {
-    if (!userContext.usersFridge) {
-      userContext.setFridge(['tomatooooooooooooooooooooooooooooooooooooooooooooooooooooo', 'pasta', 'cheese']);
-    }
-  }, []); 
+  useAsync(() => get(userContext.user.uid), (result) => userContext.setFridge(result), [], (error) => console.log(error));
 
   return (<>
-    { userContext.usersFridge ?
+    { userContext.usersFridge || userContext.usersFridge === [] ?
       <div class="contents">
         <div class="centerizer">
         {
