@@ -12,7 +12,16 @@ function Recipe() {
   const {get} = useServer('/recipe');
   const userContext = useContext(UserContext);
 
-  useAsync(() => get(userContext.user.uid), (result) => {console.log(result); setRecipe(result[0])}, [], (error) => console.log(error));
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+  
+  async function refreshRecipe() {
+    setRecipe(null);
+    await get(userContext.user.uid).then((result) => setRecipe(result[getRandomInt(5)]));
+  }
+
+  useAsync(() => get(userContext.user.uid), (result) => setRecipe(result[getRandomInt(5)]), [], (error) => console.log(error));
   
   return (
     <>
@@ -34,6 +43,11 @@ function Recipe() {
                 <p className="recipe-title">
                   {recipe.title}
                 </p>
+              </div>
+            </Col>
+            <Col>
+              <div onClick={refreshRecipe}>
+                <p className="refresh">⟳</p>
               </div>
             </Col>
           </Row>

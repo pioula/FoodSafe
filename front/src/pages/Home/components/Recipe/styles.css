@@ -50,3 +50,8 @@
 .credits:visited {
   color: #a7128ba9;
 }
+
+.refresh {
+  padding-top: 15px;
+  font-size: 30px;
+}
