@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/esm/Row';
 import UserContext from '../../../../contexts/userContext';
 import useAsync from '../../../../hooks/useAsync';
 import useServer from '../../../../hooks/useServer';
+import AddIngredient from '../AddIngredient/AddIngredient';
 import './styles.css';
 
 function FridgeContent() {
@@ -20,7 +21,7 @@ function FridgeContent() {
     }
   }
 
-  useAsync(() => get(userContext.user.uid), (result) => userContext.setFridge(result), [], (error) => console.log(error));
+  useAsync(() => get(userContext.user.uid), (result) => userContext.setFridge([]), [], (error) => console.log(error));
 
   return (<>
     { userContext.usersFridge || userContext.usersFridge === [] ?
@@ -44,11 +45,7 @@ function FridgeContent() {
             </div>
           )
           }
-        <div className="add-row">
-           <p className="add-button">
-              Add new +
-            </p>
-          </div>
+        <AddIngredient />
         </div>
       </div> : <div>Loading...</div>
     }

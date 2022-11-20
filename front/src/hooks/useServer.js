@@ -25,14 +25,14 @@ function useServer(path) {
   // A function that sends the get method to server and returns
   // the response on success or null otherwise.
   function get(uid) {
-    return fetch(`${defaultPath}${path}/${uid}`, { credentials: 'include', ...GET })
+    return fetch(`${defaultPath}${path}/${uid}`, {  ...GET })
       .then((response) => (response.status === 200 ? response.json() : null));
   }
 
   // A function that sends the post method to server and returns
   // the response with response status.
   function post(object, uid) {
-    return fetch(`${defaultPath}${path}/${uid}`, { credentials: 'include', ...POST(object) })
+    return fetch(`${defaultPath}${path}/${uid}`, {  ...POST(object) })
       .then((response) => ({ status: response.status, data: response.json() }));
   }
 

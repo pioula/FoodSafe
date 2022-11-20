@@ -4,10 +4,6 @@ import { useEffect } from "react";
 
 function SignIn() {
     const { user, onSignIn } = useSignIn();
-
-    useEffect(() => {
-        console.log(user);
-    }, []);
     
     return (
         <div className="greeting">

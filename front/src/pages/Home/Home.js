@@ -22,9 +22,6 @@ function Home() {
                         <Col><SignIn /></Col>
                     </Row>
                     <Row>
-                        <Col><AddIngredient /></Col>
-                    </Row>
-                    <Row>
                         <Col><FridgeContent /></Col>
                     </Row>
                 </Container> :

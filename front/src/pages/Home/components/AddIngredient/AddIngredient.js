@@ -1,22 +1,41 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
+import Col from 'react-bootstrap/esm/Col';
+import Container from 'react-bootstrap/esm/Container';
+import Row from 'react-bootstrap/esm/Row';
 import UserContext from '../../../../contexts/userContext';
+import './styles.css';
 
 function AddIngredient() {
-  const userContext = useContext(UserContext);
   const [ingredient, setIngredient] = useState('');
+  const [mode, setMode] = useState(true); // true - add button
+
+  const addInput = useRef(null);
 
   function handleChange(event) {
     setIngredient(event.target.value);
   }
 
+  // function handleClick() {
+  //   userContext.setFridge([...userContext.usersFridge, ingredient])
+  // }
   function handleClick() {
-    userContext.setFridge([...userContext.usersFridge, ingredient])
+
   }
 
   return (
-    <div>
-      <input type="text" name="Ingredient" onChange={handleChange} />
-      <div onClick={handleClick}>Add</div>
+    <div className="add-row">
+      <Container>
+        <Row>
+          <Col>
+            <input type="text" name="Ingredient" onChange={handleChange} ref={addInput} />
+          </Col>
+          <Col md="auto">
+            <div className="accept-button" onClick={handleClick}>
+              <p className="accept-content">+</p>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
