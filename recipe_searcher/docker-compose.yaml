@@ -1,0 +1,12 @@
+version: '3'
+services:
+  api:
+    container_name: fastapi-app
+    build: .
+    ports:
+      - '8000:80'
+  redis:
+    image: redis
+    container_name: redis-container
+    ports:
+      - "6379:6379"
