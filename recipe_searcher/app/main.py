@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
 import redis
@@ -61,9 +62,20 @@ def search(products):
     result['missed_ingredients'] = [ing['name'] for ing in meal['missedIngredients']]
     results.append(result)
   r.set(name=products[0], value=pickle.dumps(results[0]), ex=15)
+  print(dict(enumerate(results)))
   return dict(enumerate(results))
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class Products(BaseModel):
   products: list
