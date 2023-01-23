@@ -9,15 +9,21 @@ import Col from 'react-bootstrap/esm/Col';
 
 function Recipe() {
   const [recipe, setRecipe] = useState();
-  const {get} = useServer('/recipe');
+  const {post} = useServer('/recipe', 'http://localhost:8000');
   const userContext = useContext(UserContext);
-  
+
   async function refreshRecipe() {
     setRecipe(null);
-    await get(userContext.user.uid).then((result) => setRecipe(result[0]));
+    await post({ products: ["carrot", "apple"] })
+    .then((result) => result["data"].then(
+      (returned_recipes) => setRecipe(returned_recipes[0])))
   }
 
-  useAsync(() => get(userContext.user.uid), (result) => setRecipe(result[0]), [], (error) => console.log(error));
+  // useAsync(() => get(userContext.user.uid), (result) => setRecipe(result[0]), [], (error) => console.log(error));
+  useAsync(async () => await post({ products: ["tomato", "pineapple"] }),
+   (result) => result["data"].then(
+    (returned_recipes) => setRecipe(returned_recipes[0])), [], 
+    (error) => console.log(error));
   
   return (
     <>
