@@ -31,6 +31,7 @@ jobs:
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v0.4.0'
+      with:
         workload_identity_provider: 'projects/67626149693/locations/global/workloadIdentityPools/github-actions/providers/provider'
         service_account: 'gcp-sa@foodsafe-375621.iam.gserviceaccount.com'
 
