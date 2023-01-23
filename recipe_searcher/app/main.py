@@ -11,6 +11,8 @@ r = redis.Redis(
   db=0, password=None
 )
 
+expiry_time = 30
+
 # Przyjmuje listę produktów np. ["tomato", "apple"]
 def get_recipes_by_products(products):
   results = requests.get(
@@ -50,18 +52,39 @@ def search(products):
   if len(products) == 0:
     products = ['tomato', 'pasta']
   products.sort()
-  recipe = r.get(products[0])
-  if recipe != None:
-    return dict(enumerate([pickle.loads(recipe)]))
-  recipes = get_recipes_by_products(products)
 
+  recipe_counter = dict()
+  for product in products:
+    id = r.get(product)
+    if id != None:
+      recipe_counter[id] = recipe_counter.get(id, 0) + 1
+
+  recipe_counter = recipe_counter.items()
+  if len(recipe_counter) > 0:
+    best_match = (None, 0)
+    for id, count in recipe_counter:
+      if count > best_match[1]:
+        best_match = (id, count)
+    recipe = r.get(best_match[0])
+    print('cached:', best_match)
+    return dict(enumerate([pickle.loads(recipe)]))
+
+  recipes = get_recipes_by_products(products)
   results = []
   for meal in recipes:
     id = meal['id']
     result = get_data_from_recipe(id)
     result['missed_ingredients'] = [ing['name'] for ing in meal['missedIngredients']]
-    results.append(result)
-  r.set(name=products[0], value=pickle.dumps(results[0]), ex=15)
+    results.append((id, result))
+
+  id, result = results[0]
+  r.set(name=id, value=pickle.dumps(result), ex=expiry_time+5)
+  print('set id:', id)
+
+  for product in products:
+    r.set(name=product, value=id, ex=expiry_time)
+    print('set prod:', product)
+
   print(dict(enumerate(results)))
   return dict(enumerate(results))
 
