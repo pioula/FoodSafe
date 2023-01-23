@@ -11,17 +11,13 @@ function Recipe() {
   const [recipe, setRecipe] = useState();
   const {get} = useServer('/recipe');
   const userContext = useContext(UserContext);
-
-  function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-  }
   
   async function refreshRecipe() {
     setRecipe(null);
-    await get(userContext.user.uid).then((result) => setRecipe(result[getRandomInt(5)]));
+    await get(userContext.user.uid).then((result) => setRecipe(result[0]));
   }
 
-  useAsync(() => get(userContext.user.uid), (result) => setRecipe(result[getRandomInt(5)]), [], (error) => console.log(error));
+  useAsync(() => get(userContext.user.uid), (result) => setRecipe(result[0]), [], (error) => console.log(error));
   
   return (
     <>
