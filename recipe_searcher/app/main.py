@@ -6,7 +6,7 @@ import redis
 import pickle
 
 r = redis.Redis(
-  host="redis.fridge.svc.cluster.local",
+  host="redis",
   port=6379,
   db=0, password=None
 )
@@ -85,8 +85,8 @@ def search(products):
     r.set(name=product, value=id, ex=expiry_time)
     print('set prod:', product)
 
-  print(dict(enumerate(results)))
-  return dict(enumerate(results))
+  print(dict(enumerate([results[0][1]])))
+  return dict(enumerate([results[0][1]]))
 
 app = FastAPI()
 
