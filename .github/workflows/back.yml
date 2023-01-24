@@ -5,14 +5,14 @@ on:
     branches:
     - main
     paths:
-    - backend_products/**
+    - backend_products_fastapi/**
 
 env:
-  PROJECT_ID: foodsafe-369116
+  PROJECT_ID: foodsafe-375621
   GKE_CLUSTER: food-safe-cluster
   GKE_ZONE: us-central1
   DEPLOYMENT_NAME: fridge-backend
-  NEW_IMAGE: us-central1-docker.pkg.dev/foodsafe-369116/repo/fridge-backend:${{github.run_number}}
+  NEW_IMAGE: us-central1-docker.pkg.dev/foodsafe-375621/repo/fridge-backend:${{github.run_number}}
 
 jobs:
   setup-and-deploy:
@@ -32,8 +32,8 @@ jobs:
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v0.4.0'
       with:
-        workload_identity_provider: 'projects/419978052525/locations/global/workloadIdentityPools/github-actions/providers/provider'
-        service_account: 'gcp-sa@foodsafe-369116.iam.gserviceaccount.com'
+        workload_identity_provider:  'projects/67626149693/locations/global/workloadIdentityPools/github-actions/providers/provider'
+        service_account: 'gcp-sa@foodsafe-375621.iam.gserviceaccount.com'
 
     # Setup gcloud CLI
     - name: Set up Cloud SDK
@@ -50,7 +50,7 @@ jobs:
       run: |-
         docker build \
           --tag "$NEW_IMAGE" \
-          ./backend_products/
+          ./backend_products_fastapi/
     - name: Giving access to zone
       run: |-
         gcloud auth configure-docker us-central1-docker.pkg.dev
@@ -61,6 +61,6 @@ jobs:
     # Deploy sample image to the GKE cluster
     - name: Deploy
       run: |-
-        (cd backend_products && kustomize edit set image $DEPLOYMENT_NAME=$NEW_IMAGE)
-        kubectl apply -k ./backend_products/
+        (cd backend_products_fastapi && kustomize edit set image $DEPLOYMENT_NAME=$NEW_IMAGE)
+        kubectl apply -k ./backend_products_fastapi/
         kubectl get services -o wide
