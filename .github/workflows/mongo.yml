@@ -1,0 +1,66 @@
+name: Deploy fridge backend to gke
+
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - mongo-image/**
+
+env:
+  PROJECT_ID: foodsafe-375621
+  GKE_CLUSTER: food-safe-cluster
+  GKE_ZONE: us-central1
+  DEPLOYMENT_NAME: fridge-mongo
+  NEW_IMAGE: us-central1-docker.pkg.dev/foodsafe-375621/repo/fridge-mongo:${{github.run_number}}
+
+jobs:
+  setup-and-deploy:
+    name: Setup and Deploy
+    runs-on: ubuntu-latest
+
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v0.4.0'
+      with:
+        workload_identity_provider:  'projects/67626149693/locations/global/workloadIdentityPools/github-actions/providers/provider'
+        service_account: 'gcp-sa@foodsafe-375621.iam.gserviceaccount.com'
+
+    # Setup gcloud CLI
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v0
+
+    - id: get-gke-credentials
+      uses: google-github-actions/get-gke-credentials@v0
+      with:
+        cluster_name: food-safe-cluster
+        location: us-central1-c
+
+    # Build the Docker image
+    - name: Build
+      run: |-
+        docker build \
+          --tag "$NEW_IMAGE" \
+          ./mongo-image/
+    - name: Giving access to zone
+      run: |-
+        gcloud auth configure-docker us-central1-docker.pkg.dev
+    # Push the Docker image to Google Container Registry
+    - name: Publish
+      run: |-
+        docker push "$NEW_IMAGE"
+    # Deploy sample image to the GKE cluster
+    - name: Deploy
+      run: |-
+        (cd mongo-image && kustomize edit set image $DEPLOYMENT_NAME=$NEW_IMAGE)
+        kubectl apply -k ./mongo-image/
+        kubectl get services -o wide
