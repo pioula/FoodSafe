@@ -10,7 +10,7 @@ import DeleteIngredient from '../DeleteIngredient/DeleteIngredient';
 import './styles.css';
 
 function FridgeContent() {
-  const {get} = useServer('/products', 'svc-back.fridge.svc.cluster.local');
+  const {get} = useServer('/products', 'http://svc-back.fridge.svc.cluster.local');
   const userContext = useContext(UserContext);
 
   function prepareIngredientName(ingredient) {
