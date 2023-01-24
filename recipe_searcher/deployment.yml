@@ -1,0 +1,20 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "fridge-recipe"
+  namespace: "fridge"
+  labels:
+    app: "fridge-recipe"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "fridge-recipe"
+  template:
+    metadata:
+      labels:
+        app: "fridge-recipe"
+    spec:
+      containers:
+      - name: "fridge-recipe-sha256-1"
+        image: "fridge-recipe"
