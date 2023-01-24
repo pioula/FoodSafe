@@ -6,10 +6,10 @@ from pymongo import MongoClient
 def get_database(uid):
    # Provide the mongodb atlas url to connect python to mongodb using pymongo
    
-   CONNECTION_STRING = "mongodb://fridge:pass@mongo-0.mongo-svc:27017/fridge"
+   CONNECTION_STRING = "mongodb://fridge:pass@mongo-0.mongo-svc:27017/admin"
    a = uid[0]
    if a.islower() or (a.isnumeric() and a <= '4'):
-    CONNECTION_STRING = "mongodb://fridge:pass@mongo-1.mongo-svc:27017/fridge"
+    CONNECTION_STRING = "mongodb://fridge:pass@mongo-1.mongo-svc:27017/admin"
  
    # Create a connection using MongoClient. You can import MongoClient or use pymongo.MongoClient
    client = MongoClient(CONNECTION_STRING)
