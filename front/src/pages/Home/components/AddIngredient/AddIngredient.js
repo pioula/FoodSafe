@@ -9,7 +9,7 @@ import './styles.css';
 function AddIngredient() {
   const [ingredient, setIngredient] = useState('');
   const userContext = useContext(UserContext);
-  const {post} = useServer('/products');
+  const {post} = useServer('/products', 'svc-back.fridge.svc.cluster.local');
 
   function handleChange(event) {
     setIngredient(event.target.value);

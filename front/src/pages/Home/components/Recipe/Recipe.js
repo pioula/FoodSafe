@@ -9,21 +9,25 @@ import Col from 'react-bootstrap/esm/Col';
 
 function Recipe() {
   const [recipe, setRecipe] = useState();
-  const {post} = useServer('/recipe', 'http://localhost:8000');
+  const {post} = useServer('/recipe', 'svc-recipe.fridge.svc.cluster.local');
+  const {get} = useServer('/products', 'svc-back.fridge.svc.cluster.local');
   const userContext = useContext(UserContext);
 
   async function refreshRecipe() {
     setRecipe(null);
-    await post({ products: ["carrot", "apple"] })
+    await post({ products: userContext.usersFridge })
     .then((result) => result["data"].then(
       (returned_recipes) => setRecipe(returned_recipes[0])))
   }
 
-  // useAsync(() => get(userContext.user.uid), (result) => setRecipe(result[0]), [], (error) => console.log(error));
-  useAsync(async () => await post({ products: ["tomato", "pineapple"] }),
+  useAsync(() => get(userContext.user.uid).then((products) => post(products)),
    (result) => result["data"].then(
-    (returned_recipes) => setRecipe(returned_recipes[0])), [], 
-    (error) => console.log(error));
+    (returned_recipes) => setRecipe(returned_recipes[0])
+   ), [], (error) => console.log(error));
+  // useAsync(async () => await post({ products: ["tomato", "pineapple"] }),
+  //  (result) => result["data"].then(
+  //   (returned_recipes) => {setRecipe(returned_recipes[0]); console.log(returned_recipes)}), [], 
+  //   (error) => console.log(error));
   
   return (
     <>
