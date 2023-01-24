@@ -6,7 +6,7 @@ import CloseButton from 'react-bootstrap/CloseButton';
 
 function DeleteIngredient(props) {
   const userContext = useContext(UserContext);
-  const {remove} = useServer('/products', 'http://svc-back.fridge.svc.cluster.local');
+  const {remove} = useServer('/products', 'http://35.226.148.142');
 
 
   async function handleClick() {

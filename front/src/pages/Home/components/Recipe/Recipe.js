@@ -9,8 +9,8 @@ import Col from 'react-bootstrap/esm/Col';
 
 function Recipe() {
   const [recipe, setRecipe] = useState();
-  const {post} = useServer('/recipe', 'http://svc-recipe.fridge.svc.cluster.local');
-  const {get} = useServer('/products', 'http://svc-back.fridge.svc.cluster.local');
+  const {post} = useServer('/recipe', 'http://34.28.136.85');
+  const {get} = useServer('/products', 'http://35.226.148.142');
   const userContext = useContext(UserContext);
 
   async function refreshRecipe() {
