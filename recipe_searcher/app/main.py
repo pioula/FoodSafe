@@ -6,7 +6,7 @@ import redis
 import pickle
 
 r = redis.Redis(
-  host="redis",
+  host="redis.fridge.svc.cluster.local",
   port=6379,
   db=0, password=None
 )
